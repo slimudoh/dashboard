@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Timemap Dashboard</title>
+  <link href="../css/app.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="timemap__header">
+    <div class="timemap__header--logo">
+      <img src="./images/logo.png" alt="">
+    </div>
+  </div>
+  <div class="timemap__sidebar--desktop">
+    <p>
+      Weekly Report Summary:
+    </p>    
+    <div>
+      <div>
+        Number of Employees:<br> <%= employees %>
+      </div>
+    </div>
+    <div>
+      <div>
+        Number of Companies:<br> <%= companies %>
+      </div>
+    </div>
+    <div>
+      <div>
+        Active Companies:<br> <%= active %>
+      </div>
+    </div>
+    <div>
+      <div>
+        Inactive Companies:<br> <%= inactive %>
+      </div>
+    </div>
+  </div>
+  <div class="timemap__body">
+    <div class="timemap__body--container">
+      <div class="timemap__container--banner">
+        Search <span style="text-transform: lowercase"><%= search %></span>
+      </div>
+      <div class="timemap__container--search">
+        <div style="width: 100px;">
+          <a href="/" style="color: #fff;text-decoration: none;">
+            <div style="padding: 5px 0;color: #fff;text-align:center;font-size: 12px;">
+              GO BACK
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="timemap__container--table">
+        <div class="timemap__table--company">
+
+          <% if ( results ) { %>
+          <% if ( results.length !== 0 ) { %>
+          <table>
+            <thead>
+              <tr>
+                <th>S/N</th>
+                <th>Company Name</th>
+                <th>Company Code</th>
+                <th>Employee Count</th>
+                <th>Amount</th>
+                <th>Date Created</th>
+                <th>Subscription date</th>
+                <th>Last Updated</th>
+                <th>Last Manager login</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for ( let result of results ) {%>
+              <tr>
+                <td><%= index %></td>
+                <td><%= result.company_name %></td>
+                <td><%= result.company_id %></td>
+                <td><%= result.number_of_employees %></td>
+                <td>&#8358;<%= result.amount %></td>
+                <td><%= result.created_date %></td>
+                <td><%= result.subscription_date %></td>
+                <td><%= result.last_updated %></td>
+                <td><%= result.employee_login %></td>
+                <% if (result.status === "Active") { %>
+                <td class="activeCoy"><%= result.status %></td>
+                <% } else { %>
+                <td class="inactiveCoy"><%= result.status %></td>
+                <% } %>
+              </tr>
+              <% index++ %>
+              <% } %>
+            </tbody>
+          </table>
+          <% } else { %>
+          <p>Nothing Found</p>
+          <% } %>
+          <% } else {%>
+          <p>Can't establish connection to clearDB at this time. Please try again..</p>
+          <% } %>
+        </div>
+        <div class="pagination">
+          <div>
+            <% if (pages > 1) { %>
+            <% for (let i = 1; i < pages + 1; i++) { %>
+            <% if (position == i) { %>
+            <span>
+             <%= i %>
+            </span>
+            <% } else {%>
+            <span>
+              <a href="/<%= i %>"><%= i %></a>
+            </span>
+            <% } %>
+            <% } %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="timemap__footer">
+    &copy;rovedana Limited
+  </div>
+
+  <script src="../script/app.js"></script>
+</body>
+
+</html>
